@@ -610,7 +610,7 @@ with col3:
         st.session_state.current_step = min(99, st.session_state.current_step + 1)
 
 with col4:
-    if st.button("+10 f"):
+    if st.button(">> +10"):
         st.session_state.current_step = min(99, st.session_state.current_step + 10)
 
 with col5:
