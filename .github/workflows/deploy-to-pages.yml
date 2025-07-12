@@ -35,7 +35,7 @@ jobs:
           version: 8
 
       - name: Install stlite
-        run: pnpm install stlite
+        run: pnpm install @stlite/cli
 
       - name: Build with stlite
         run: pnpm exec stlite build --req requirements.txt streamlit_app.py --dest build
