@@ -2,18 +2,18 @@
 
 A sea slug egg laying pattern simulation
 
-## 🌐 Live Demo
+## 🌐 Live demo
 
-**Static Web Version**: https://emily-li.github.io/sea-slug-egg-pattern-simulator
+https://emily-li.github.io/sea-slug-egg-pattern-simulator
 
-## How to Use
+## How to use
 
 1. **Select Species & Environment**: Choose from scientifically-modeled species and set conditions
 2. **Watch Pattern Formation**: Use autoplay to see the complete laying process unfold
 3. **Step Through**: Use the control buttons to examine specific moments
 4. **Compare Patterns**: Try different species to see how laying behaviors differ
 
-## Visualization Modes
+## Visualization modes
 
 ### Species
 
@@ -33,17 +33,11 @@ The following presets are available
 
 ## Local setup
 
-### Prerequisites
-
-- Python 3.13+
-
-### Installation
+Python 3.13+
 
 ```bash
 pip install -r requirements.txt
 ```
-
-### Run the Simulation
 
 ```bash
 python -m streamlit run streamlit_app.py
