@@ -2,10 +2,6 @@
 
 A sea slug egg laying pattern simulation
 
-## 🌐 Live demo
-
-https://emily-li.github.io/sea-slug-egg-pattern-simulator
-
 ## How to use
 
 1. **Select Species & Environment**: Choose from scientifically-modeled species and set conditions
