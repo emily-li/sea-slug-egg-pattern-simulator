@@ -442,26 +442,32 @@ class EggLayingVisualizer:
     
     def _add_environment_overlay(self, ax):
         """Add environmental condition indicators."""
-        # Temperature indicator (top-left)
+        # Temperature indicator (top-left) - using text instead of emoji
         temp_color = '#ff4444' if self.temperature > 25 else '#4444ff' if self.temperature < 15 else '#44ff44'
-        ax.text(0.5, 9.5, f'🌡️ {self.temperature}°C', fontsize=12, color=temp_color, 
+        ax.text(0.5, 9.5, f'TEMP: {self.temperature}°C', fontsize=12, color=temp_color, 
                 bbox=dict(boxstyle="round,pad=0.3", facecolor='white', alpha=0.8))
         
-        # Flow indicator (top-right)
+        # Flow indicator (top-right) - using arrows instead of emoji
         flow_arrows = '→' * int(self.flow_rate * 5 + 1)
-        ax.text(8.5, 9.5, f'🌊 {flow_arrows}', fontsize=12, color='#00aaff',
+        ax.text(8.5, 9.5, f'FLOW: {flow_arrows}', fontsize=12, color='#00aaff',
                 bbox=dict(boxstyle="round,pad=0.3", facecolor='white', alpha=0.8))
         
-        # Substrate indicator (bottom-left)
-        substrate_emoji = {'rock': '🪨', 'seaweed': '🌿', 'coral': '🪸'}.get(self.substrate, '🏖️')
-        ax.text(0.5, 0.5, f'{substrate_emoji} {self.substrate}', fontsize=10, color='white',
+        # Substrate indicator (bottom-left) - using text instead of emojis
+        substrate_names = {
+            'rock': 'ROCK', 
+            'seaweed': 'SEAWEED', 
+            'coral': 'CORAL',
+            'sediment': 'SEDIMENT'
+        }
+        substrate_text = substrate_names.get(self.substrate, 'SUBSTRATE')
+        ax.text(0.5, 0.5, f'{substrate_text}', fontsize=10, color='white',
                 bbox=dict(boxstyle="round,pad=0.3", facecolor='black', alpha=0.6))
 
 # --- Streamlit UI ---
 
 st.set_page_config(page_title="Sea Slug Egg Laying Simulator", layout="wide")
 
-st.title("🌊 Sea Slug Egg Laying Simulator")
+st.title("Sea Slug Egg Laying Simulator")
 st.markdown("""
 This simulator allows you to explore the fascinating process of sea slug reproduction,
 from mating and egg laying to embryonic development and hatching,
@@ -592,23 +598,23 @@ if 'play_speed' not in st.session_state:
 col1, col2, col3, col4, col5, col6 = st.columns([1, 1, 1, 1, 1, 2])
 
 with col1:
-    if st.button("◀◀ -10"):
+    if st.button("-10"):
         st.session_state.current_step = max(0, st.session_state.current_step - 10)
 
 with col2:
-    if st.button("◀ -1"):
+    if st.button("-1"):
         st.session_state.current_step = max(0, st.session_state.current_step - 1)
 
 with col3:
-    if st.button("▶ +1"):
+    if st.button("+1"):
         st.session_state.current_step = min(99, st.session_state.current_step + 1)
 
 with col4:
-    if st.button("▶▶ +10"):
+    if st.button("+10 f"):
         st.session_state.current_step = min(99, st.session_state.current_step + 10)
 
 with col5:
-    auto_play = st.button("▶▶ Play" if not st.session_state.auto_play else "⏸ Pause")
+    auto_play = st.button("Play" if not st.session_state.auto_play else "Pause")
     if auto_play:
         st.session_state.auto_play = not st.session_state.auto_play
 
@@ -631,7 +637,7 @@ with speed_col2:
     )
 
 # Reset button
-if st.button("🔄 Reset to Start"):
+if st.button("Reset to Start"):
     st.session_state.current_step = 0
     st.session_state.auto_play = False
 
@@ -670,7 +676,7 @@ if st.session_state.auto_play:
         st.rerun()
     else:
         st.session_state.auto_play = False
-        st.success("🎉 Egg laying pattern complete!")
+        st.success("Egg laying pattern complete!")
 
 # For non-autoplay mode, display static visualization
 if not st.session_state.auto_play:
@@ -681,7 +687,7 @@ if not st.session_state.auto_play:
 
 # Progress bar with animation indicator
 progress_value = (st.session_state.current_step + 1) / 100
-animation_status = " 🎬 ANIMATING" if st.session_state.auto_play else ""
+animation_status = " ANIMATING" if st.session_state.auto_play else ""
 st.progress(progress_value, text=f"Egg laying pattern formation: {int(progress_value * 100)}% complete{animation_status}")
 
 # Display pattern statistics
@@ -710,15 +716,15 @@ if st.session_state.current_step > 50:
     
     with impact_col1:
         temp_effect = "Accelerated" if temperature_celsius > 20 else "Slowed" if temperature_celsius < 15 else "Normal"
-        st.info(f"🌡️ **Temperature Effect**: {temp_effect} laying rate at {temperature_celsius}°C")
+        st.info(f"**Temperature Effect**: {temp_effect} laying rate at {temperature_celsius}°C")
     
     with impact_col2:
         flow_effect = "Strong adhesion" if water_flow_rate > 0.7 else "Weak adhesion" if water_flow_rate < 0.3 else "Good adhesion"
-        st.info(f"🌊 **Flow Effect**: {flow_effect} with current flow rate")
+        st.info(f"**Flow Effect**: {flow_effect} with current flow rate")
 
 # Completion message and restart
 if st.session_state.current_step >= 99:
-    st.success("🎯 **Pattern Formation Complete!**")
+    st.success("**Pattern Formation Complete!**")
     st.balloons()
     
     completion_info = f"""
@@ -734,7 +740,7 @@ if st.session_state.current_step >= 99:
     
     st.markdown(completion_info)
     
-    if st.button("🆕 Start New Pattern", type="primary"):
+    if st.button("Start New Pattern", type="primary"):
         st.session_state.current_step = 0
         st.session_state.auto_play = False
         st.rerun()
